@@ -20,7 +20,7 @@
 		<TextBox Name="tbRandomFileNum" HorizontalAlignment="Left" Height="20" Margin="708,282,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="38"/>
 		<CheckBox x:Name="cbE" Content="하위 디렉터리 포함" HorizontalAlignment="Left" Height="20" Margin="20,227,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
 		<CheckBox x:Name="cbDcopyT" Content="타임스탬프 유지" HorizontalAlignment="Left" Height="20" Margin="20,252,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
-		<TextBox x:Name="tbRetryNum" HorizontalAlignment="Left" Height="20" Margin="247,276,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.408,0.559"/>
+		<TextBox x:Name="tbRetryNum" HorizontalAlignment="Left" Height="20" Margin="247,276,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.408,0.559"/>
 		<CheckBox x:Name="cbRetryNum" Content="실패한 복사에 대한 재시도 횟수 지정" HorizontalAlignment="Left" Height="20" Margin="20,278,0,0" VerticalAlignment="Top" Width="223" IsChecked="true" Checked="OnCheckRetryNum" Unchecked="OnUncheckRetryNum"/>
 		
 	</Grid>

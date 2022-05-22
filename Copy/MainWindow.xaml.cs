@@ -33,6 +33,9 @@ namespace Copy {
 		public MainWindow() {
 			InitializeComponent();
 
+			Left = ( SystemParameters.WorkArea.Width / 2 ) - ( Width / 2 );
+			Top = ( SystemParameters.WorkArea.Height / 2 ) - ( Height / 2 );
+
 			fileDialog.IsFolderPicker = true;
 
 			cmd.FileName = @"cmd";
