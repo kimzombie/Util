@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Copy"
         mc:Ignorable="d"
-        Title="Robocopy" Height="360.204" Width="773.469">
+        Title="Robocopy" Height="367.656" Width="773.469">
 	<Grid>
-		<Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="600"/>
-		<Label Content="Src" HorizontalAlignment="Left" Height="29" Margin="20,23,0,0" VerticalAlignment="Top" Width="54"/>
-		<TextBox Name="tbSrcPath" HorizontalAlignment="Left" Height="21" Margin="20,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.5,0.118"/>
-		<Button Content="..." HorizontalAlignment="Left" Height="21" Margin="566,57,0,0" VerticalAlignment="Top" Width="23" Click="OnBtnSrc"/>
-		<Label Content="Dest" HorizontalAlignment="Left" Height="29" Margin="20,113,0,0" VerticalAlignment="Top" Width="54"/>
-		<TextBox Name="tbDestPath" HorizontalAlignment="Left" Height="21" Margin="20,147,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.5,0.118"/>
+		<GroupBox Header="Select folder" HorizontalAlignment="Left" Height="198" Margin="10,0,0,0" VerticalAlignment="Top" Width="598"/>
+		<Label Content="From" HorizontalAlignment="Left" Height="29" Margin="20,39,0,0" VerticalAlignment="Top" Width="54"/>
+		<TextBox Name="tbFromPath" HorizontalAlignment="Left" Height="21" Margin="20,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.5,0.118"/>
+		<Button Content="..." HorizontalAlignment="Left" Height="21" Margin="566,68,0,0" VerticalAlignment="Top" Width="23" Click="OnBtnSrc"/>
+		<Label Content="To" HorizontalAlignment="Left" Height="29" Margin="20,117,0,0" VerticalAlignment="Top" Width="54"/>
+		<TextBox Name="tbToPath" HorizontalAlignment="Left" Height="21" Margin="20,147,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.5,0.118"/>
 		<Button Content="..." HorizontalAlignment="Left" Height="21" Margin="566,147,0,0" VerticalAlignment="Top" Width="23" Click="OnBtnDest"/>
-		<Button Content="Copy" HorizontalAlignment="Left" Height="188" Margin="620,10,0,0" VerticalAlignment="Top" Width="133" Click="OnBtnCopy"/>
-		<Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="98" Margin="10,214,0,0" Stroke="Black" VerticalAlignment="Top" Width="743"/>
-		<CheckBox Name="cbRandomFiles" Content="Random Files" HorizontalAlignment="Left" Height="20" Margin="605,284,0,0" VerticalAlignment="Top" Width="100" Checked="OnCheckRandomFiles" Unchecked="OnUncheckRandomFile"/>
-		<TextBox Name="tbRandomFileNum" HorizontalAlignment="Left" Height="20" Margin="708,282,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="38"/>
-		<CheckBox x:Name="cbE" Content="하위 디렉터리 포함" HorizontalAlignment="Left" Height="20" Margin="20,227,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
-		<CheckBox x:Name="cbDcopyT" Content="타임스탬프 유지" HorizontalAlignment="Left" Height="20" Margin="20,252,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
-		<TextBox x:Name="tbRetryNum" HorizontalAlignment="Left" Height="20" Margin="247,276,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.408,0.559"/>
-		<CheckBox x:Name="cbRetryNum" Content="실패한 복사에 대한 재시도 횟수 지정" HorizontalAlignment="Left" Height="20" Margin="20,278,0,0" VerticalAlignment="Top" Width="223" IsChecked="true" Checked="OnCheckRetryNum" Unchecked="OnUncheckRetryNum"/>
-		
+		<Button Content="Copy" HorizontalAlignment="Left" Height="188" Margin="616,10,0,0" VerticalAlignment="Top" Width="133" Click="OnBtnCopy"/>
+
+		<GroupBox Header="Option" HorizontalAlignment="Left" Height="116" Margin="10,203,0,0" VerticalAlignment="Top" Width="743"/>
+		<CheckBox Name="cbRandomFiles" Content="Random Files" HorizontalAlignment="Left" Height="20" Margin="605,285,0,0" VerticalAlignment="Top" Width="100" Checked="OnCheckRandomFiles" Unchecked="OnUncheckRandomFile"/>
+		<TextBox Name="tbRandomFileNum" HorizontalAlignment="Left" Height="20" Margin="708,284,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="38"/>
+		<CheckBox x:Name="cbE" Content="하위 디렉터리 포함" HorizontalAlignment="Left" Height="20" Margin="20,234,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
+		<CheckBox x:Name="cbDcopyT" Content="타임스탬프 유지" HorizontalAlignment="Left" Height="20" Margin="20,259,0,0" VerticalAlignment="Top" Width="131" IsChecked="true"/>
+		<TextBox x:Name="tbRetryNum" HorizontalAlignment="Left" Height="20" Margin="247,284,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.408,0.559"/>
+		<CheckBox x:Name="cbRetryNum" Content="실패한 복사에 대한 재시도 횟수 지정" HorizontalAlignment="Left" Height="20" Margin="20,285,0,0" VerticalAlignment="Top" Width="223" IsChecked="true" Checked="OnCheckRetryNum" Unchecked="OnUncheckRetryNum"/>
+
 	</Grid>
 </Window>

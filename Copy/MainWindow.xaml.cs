@@ -55,13 +55,13 @@ namespace Copy {
 
 		private void OnBtnSrc( object sender, RoutedEventArgs e ) {
 			if( fileDialog.ShowDialog() == CommonFileDialogResult.Ok ) {
-				tbSrcPath.Text = fileDialog.FileName;
+				tbFromPath.Text = fileDialog.FileName;
 			}
 		}
 
 		private void OnBtnDest( object sender, RoutedEventArgs e ) {
 			if ( fileDialog.ShowDialog() == CommonFileDialogResult.Ok ) {
-				tbDestPath.Text = fileDialog.FileName;
+				tbToPath.Text = fileDialog.FileName;
 			}
 		}
 
@@ -70,14 +70,16 @@ namespace Copy {
 
 			sbCommand.Clear();
 			sbCommand.Append( @"robocopy ");
-			sbCommand.Append( tbSrcPath.Text );
-			sbCommand.Append( " " );
-			sbCommand.Append( tbDestPath.Text );
-			sbCommand.Append( " " );
+			sbCommand.Append( "\"" );
+			sbCommand.Append( tbFromPath.Text );
+			sbCommand.Append( "\" " );
+			sbCommand.Append( "\"" );
+			sbCommand.Append( tbToPath.Text );
+			sbCommand.Append( "\" " );
 
 			int num = 0;
 			if ( cbRandomFiles.IsChecked.Value && int.TryParse( tbRandomFileNum.Text, out num ) ) {
-				string[] files = System.IO.Directory.GetFiles( tbSrcPath.Text );
+				string[] files = System.IO.Directory.GetFiles( tbFromPath.Text );
 
 				listNumber.Clear();
 				for ( int i = 0; i < files.Length; ++i ) {
@@ -99,13 +101,13 @@ namespace Copy {
 				}
 			}
 
-			sbCommand.Append( "/copy:DAT " );
-
 			if( cbE.IsChecked.Value ) { // 하위 디렉터리 복사
 				sbCommand.Append( "/e " );
 			}
 
-			if( cbDcopyT.IsChecked.Value ) { // 타임스탬프 유지
+			sbCommand.Append( "/copy:DAT " );
+
+			if ( cbDcopyT.IsChecked.Value ) { // 타임스탬프 유지
 				sbCommand.Append( "/dcopy:T " );
 			}
 
