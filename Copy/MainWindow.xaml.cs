@@ -68,6 +68,9 @@ namespace Copy {
 		private void OnBtnCopy( object sender, RoutedEventArgs e ) {
 			process.Start();
 
+			int lastIndex = tbFromPath.Text.LastIndexOf( '\\' );
+			string folder = tbFromPath.Text.Substring( lastIndex, tbFromPath.Text.Length - lastIndex );
+
 			sbCommand.Clear();
 			sbCommand.Append( @"robocopy ");
 			sbCommand.Append( "\"" );
@@ -75,6 +78,7 @@ namespace Copy {
 			sbCommand.Append( "\" " );
 			sbCommand.Append( "\"" );
 			sbCommand.Append( tbToPath.Text );
+			sbCommand.Append( folder );
 			sbCommand.Append( "\" " );
 
 			int num = 0;
