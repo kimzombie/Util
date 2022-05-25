@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
 
 
 namespace Copy {
@@ -66,8 +67,6 @@ namespace Copy {
 		}
 
 		private void OnBtnCopy( object sender, RoutedEventArgs e ) {
-			process.Start();
-
 			int lastIndex = tbFromPath.Text.LastIndexOf( '\\' );
 			string folder = tbFromPath.Text.Substring( lastIndex, tbFromPath.Text.Length - lastIndex );
 
@@ -124,8 +123,11 @@ namespace Copy {
 			sbCommand.Append( "/mt" );
 			sbCommand.Append( Environment.NewLine );
 
+			process.Start();
 			process.StandardInput.Write( sbCommand.ToString() );
 			process.StandardInput.Close();
+
+			Task task = CmdReader( process.StandardOutput );
 
 			process.WaitForExit();
 			process.Close();
@@ -147,6 +149,14 @@ namespace Copy {
 
 		private void OnUncheckRandomFile( object sender, RoutedEventArgs e ) {
 			tbRandomFileNum.IsEnabled = cbRandomFiles.IsChecked.Value;
+		}
+
+		private async Task CmdReader( TextReader reader ) {
+			string str;
+
+			while ( ( str = await reader.ReadLineAsync() ) != null ) {
+				MessageBox.Show( str );
+			}
 		}
 	}
 }
