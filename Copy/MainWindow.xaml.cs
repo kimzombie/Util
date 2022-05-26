@@ -129,10 +129,10 @@ namespace Copy {
 
 			Task task = CmdReader( process.StandardOutput );
 
-			process.WaitForExit();
-			process.Close();
+			//process.WaitForExit();
+			//process.Close();
 
-			MessageBox.Show( "작업 완료", "Robocopy" );
+			//MessageBox.Show( "작업 완료", "Robocopy" );
 		}
 
 		private void OnCheckRetryNum( object sender, RoutedEventArgs e ) {
@@ -155,8 +155,11 @@ namespace Copy {
 			string str;
 
 			while ( ( str = await reader.ReadLineAsync() ) != null ) {
-				MessageBox.Show( str );
+				Console.WriteLine( str );
 			}
+
+			process.Close();
+			MessageBox.Show( "작업 완료", "Robocopy" );
 		}
 	}
 }
