@@ -20,7 +20,6 @@ namespace Copy {
 		private List<int>				listNumber		= new List<int>();
 		private List<int>				listResultValue	= new List<int>();
 		private Random					random          = new Random();
-		private ProgressWnd             progressWnd     = new ProgressWnd();
 
 
 		public MainWindow() {
@@ -31,12 +30,12 @@ namespace Copy {
 
 			fileDialog.IsFolderPicker = true;
 
-			cmd.FileName = @"cmd";
-			cmd.CreateNoWindow = true;
+			cmd.FileName = "cmd.exe";
+			cmd.CreateNoWindow = false;
 			cmd.UseShellExecute = false;
-			cmd.RedirectStandardInput = true;
-			cmd.RedirectStandardOutput = true;
-			cmd.RedirectStandardError = true;
+			//cmd.RedirectStandardInput = true;
+			//cmd.RedirectStandardOutput = true;
+			//cmd.RedirectStandardError = true;
 
 			process.StartInfo = cmd;
 			process.StartInfo.WorkingDirectory = "C:\\Windows\\System32";
@@ -63,7 +62,7 @@ namespace Copy {
 			string folder = fromPath.Text.Substring( lastIndex, fromPath.Text.Length - lastIndex );
 
 			sbCommand.Clear();
-			sbCommand.Append( @"robocopy ");
+			sbCommand.Append( "/c robocopy ");
 			sbCommand.Append( "\"" );
 			sbCommand.Append( fromPath.Text );
 			sbCommand.Append( "\" " );
@@ -115,16 +114,16 @@ namespace Copy {
 			sbCommand.Append( "/mt" );
 			sbCommand.Append( Environment.NewLine );
 
+			process.StartInfo.Arguments = sbCommand.ToString();
 			process.Start();
-			process.StandardInput.Write( sbCommand.ToString() );
-			process.StandardInput.Close();
 
-			progressWnd.Show( process );
+			//process.StandardInput.Write( sbCommand.ToString() );
+			//process.StandardInput.Close();
 
-			//process.WaitForExit();
-			//process.Close();
+			process.WaitForExit();
+			process.Close();
 
-			//MessageBox.Show( "작업 완료", "Robocopy" );
+			MessageBox.Show( "작업 완료", "Robocopy" );
 		}
 
 		private void OnCheckRetryNum( object sender, RoutedEventArgs e ) {
@@ -142,19 +141,5 @@ namespace Copy {
 		private void OnUncheckRandomFile( object sender, RoutedEventArgs e ) {
 			randomFileNum.IsEnabled = isRandomFiles.IsChecked.Value;
 		}
-
-		/*
-		private async Task CmdReader( TextReader reader ) {
-			progressWnd.ShowDialog();
-
-			string str;
-			while ( ( str = await reader.ReadLineAsync() ) != null ) {
-				progressWnd.progressText.Text += str;
-			}
-
-			process.Close();
-			progressWnd.Close();
-		}
-		*/
 	}
 }
