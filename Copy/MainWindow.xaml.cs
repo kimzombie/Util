@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
@@ -29,6 +20,7 @@ namespace Copy {
 		private List<int>				listNumber		= new List<int>();
 		private List<int>				listResultValue	= new List<int>();
 		private Random					random          = new Random();
+		private ProgressWnd             progressWnd     = new ProgressWnd();
 
 
 		public MainWindow() {
@@ -50,39 +42,39 @@ namespace Copy {
 			process.StartInfo.WorkingDirectory = "C:\\Windows\\System32";
 			process.EnableRaisingEvents = false;
 
-			cbRandomFiles.IsChecked = false;
-			tbRandomFileNum.IsEnabled = false;
+			isRandomFiles.IsChecked = false;
+			randomFileNum.IsEnabled = false;
 		}
 
 		private void OnBtnSrc( object sender, RoutedEventArgs e ) {
 			if( fileDialog.ShowDialog() == CommonFileDialogResult.Ok ) {
-				tbFromPath.Text = fileDialog.FileName;
+				fromPath.Text = fileDialog.FileName;
 			}
 		}
 
 		private void OnBtnDest( object sender, RoutedEventArgs e ) {
 			if ( fileDialog.ShowDialog() == CommonFileDialogResult.Ok ) {
-				tbToPath.Text = fileDialog.FileName;
+				toPath.Text = fileDialog.FileName;
 			}
 		}
 
 		private void OnBtnCopy( object sender, RoutedEventArgs e ) {
-			int lastIndex = tbFromPath.Text.LastIndexOf( '\\' );
-			string folder = tbFromPath.Text.Substring( lastIndex, tbFromPath.Text.Length - lastIndex );
+			int lastIndex = fromPath.Text.LastIndexOf( '\\' );
+			string folder = fromPath.Text.Substring( lastIndex, fromPath.Text.Length - lastIndex );
 
 			sbCommand.Clear();
 			sbCommand.Append( @"robocopy ");
 			sbCommand.Append( "\"" );
-			sbCommand.Append( tbFromPath.Text );
+			sbCommand.Append( fromPath.Text );
 			sbCommand.Append( "\" " );
 			sbCommand.Append( "\"" );
-			sbCommand.Append( tbToPath.Text );
+			sbCommand.Append( toPath.Text );
 			sbCommand.Append( folder );
 			sbCommand.Append( "\" " );
 
 			int num = 0;
-			if ( cbRandomFiles.IsChecked.Value && int.TryParse( tbRandomFileNum.Text, out num ) ) {
-				string[] files = System.IO.Directory.GetFiles( tbFromPath.Text );
+			if ( isRandomFiles.IsChecked.Value && int.TryParse( randomFileNum.Text, out num ) ) {
+				string[] files = System.IO.Directory.GetFiles( fromPath.Text );
 
 				listNumber.Clear();
 				for ( int i = 0; i < files.Length; ++i ) {
@@ -104,19 +96,19 @@ namespace Copy {
 				}
 			}
 
-			if( cbE.IsChecked.Value ) { // 하위 디렉터리 복사
+			if( isIncludeSubdir.IsChecked.Value ) { // 하위 디렉터리 복사
 				sbCommand.Append( "/e " );
 			}
 
 			sbCommand.Append( "/copy:DAT " );
 
-			if ( cbDcopyT.IsChecked.Value ) { // 타임스탬프 유지
+			if ( isDcopyTimeStamp.IsChecked.Value ) { // 타임스탬프 유지
 				sbCommand.Append( "/dcopy:T " );
 			}
 
-			if( cbRetryNum.IsChecked.Value ) { // 실패한 복사에 대한 재시도 횟수 지정
+			if( isRetryNum.IsChecked.Value ) { // 실패한 복사에 대한 재시도 횟수 지정
 				sbCommand.Append( "/r:" );
-				sbCommand.Append( tbRetryNum.Text );
+				sbCommand.Append( retryNum.Text );
 				sbCommand.Append( " " );
 			}
 
@@ -127,7 +119,7 @@ namespace Copy {
 			process.StandardInput.Write( sbCommand.ToString() );
 			process.StandardInput.Close();
 
-			Task task = CmdReader( process.StandardOutput );
+			progressWnd.Show( process );
 
 			//process.WaitForExit();
 			//process.Close();
@@ -136,30 +128,33 @@ namespace Copy {
 		}
 
 		private void OnCheckRetryNum( object sender, RoutedEventArgs e ) {
-			tbRetryNum.IsEnabled = cbRetryNum.IsChecked.Value;
+			retryNum.IsEnabled = isRetryNum.IsChecked.Value;
 		}
 
 		private void OnUncheckRetryNum( object sender, RoutedEventArgs e ) {
-			tbRetryNum.IsEnabled = cbRetryNum.IsChecked.Value;
+			retryNum.IsEnabled = isRetryNum.IsChecked.Value;
 		}
 
 		private void OnCheckRandomFiles( object sender, RoutedEventArgs e ) {
-			tbRandomFileNum.IsEnabled = cbRandomFiles.IsChecked.Value;
+			randomFileNum.IsEnabled = isRandomFiles.IsChecked.Value;
 		}
 
 		private void OnUncheckRandomFile( object sender, RoutedEventArgs e ) {
-			tbRandomFileNum.IsEnabled = cbRandomFiles.IsChecked.Value;
+			randomFileNum.IsEnabled = isRandomFiles.IsChecked.Value;
 		}
 
+		/*
 		private async Task CmdReader( TextReader reader ) {
-			string str;
+			progressWnd.ShowDialog();
 
+			string str;
 			while ( ( str = await reader.ReadLineAsync() ) != null ) {
-				Console.WriteLine( str );
+				progressWnd.progressText.Text += str;
 			}
 
 			process.Close();
-			MessageBox.Show( "작업 완료", "Robocopy" );
+			progressWnd.Close();
 		}
+		*/
 	}
 }
