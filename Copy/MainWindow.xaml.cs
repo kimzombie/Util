@@ -41,7 +41,7 @@ namespace Copy {
 			process.StartInfo.WorkingDirectory = "C:\\Windows\\System32";
 			process.EnableRaisingEvents = false;
 
-			isRandomFiles.IsChecked = false;
+			retryNum.IsEnabled = false;
 			randomFileNum.IsEnabled = false;
 		}
 
@@ -97,6 +97,10 @@ namespace Copy {
 
 			if( isIncludeSubdir.IsChecked.Value ) { // 하위 디렉터리 복사
 				sbCommand.Append( "/e " );
+			}
+
+			if( isMoveDir.IsChecked.Value ) { // 잘라내기
+				sbCommand.Append( "/move " );
 			}
 
 			sbCommand.Append( "/copy:DAT " );
